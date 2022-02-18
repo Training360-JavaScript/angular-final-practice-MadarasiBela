@@ -1,1 +1,108 @@
-<p>event-editor works!</p>
+<!--
+   id: number = 0;
+  name: string = '';
+  date: string = '';
+  time: string = '';
+  location: string = '';
+ -->
+
+ <div *ngIf="event$ |async as event" class="row">
+  <div col-6 class="offset-3 col-sm-12 offset-sm-0" >
+    <form #eventForm="ngForm" (ngSubmit)="onUpdate(event)" >
+
+      <div class="form-group">
+        <label for="event-name">Id</label>
+        <input
+         [(ngModel)]="event.id"
+         pattern="^[0-9]{1,}$"
+         required
+         id="event-id"
+         type="text"
+         class="form-contorl"
+         name="id"
+         >
+      </div>
+
+      <div class="form-group">
+        <label for="event-name">Name</label>
+        <input
+         [(ngModel)]="event.name"
+         pattern="^[a-űA-Ű- ]{8,}$"
+         required
+         id="event-name"
+         type="text"
+         class="form-contorl"
+         name="name"
+         >
+      </div>
+      <div
+      [hidden]="eventForm.controls['name']?.valid"
+       class="error-message">
+        The name is required to be > 8 char!
+      </div>
+
+      <div class="form-group">
+        <label for="event-price">Date</label>
+        <input
+         [(ngModel)]="event.date"
+         required
+         id="event-name"
+         type="number"
+         class="form-contorl"
+         name="Date"
+         >
+      </div>
+      <div class="form-group">
+        <label for="event-price">Time</label>
+        <input
+         [(ngModel)]="event.date"
+         required
+         id="event-name"
+         type="number"
+         class="form-contorl"
+         name="Time"
+         >
+      </div>
+
+      <div class="form-group">
+        <label for="event-price">Location</label>
+        <input
+         [(ngModel)]="event.location"
+         required
+         id="event-location"
+         type="number"
+         class="form-contorl"
+         name="Location"
+         >
+      </div>
+
+      <div
+      [hidden]="eventForm.controls['price']?.valid"
+       class="error-message">
+        The price is min 1 $!
+      </div>
+
+      <!-- <div class="form-group">
+        <label for="event-category">Category</label>
+        <select
+        *ngIf="categoryList$ | async as categories"
+         [(ngModel)]="event.category "
+         id="event-name"
+         type="text"
+         class="form-contorl"
+         name="category">
+         <option *ngfor="let category of categories" [value]="category">
+
+         </option>
+
+        </select>
+      </div> -->
+
+      <button [disabled]="eventForm.invalid" class="btn btn-primary btn-block">
+        <i class="fa fa-save" > Update</i>
+      </button>
+
+    </form>
+  </div>
+</div>
+

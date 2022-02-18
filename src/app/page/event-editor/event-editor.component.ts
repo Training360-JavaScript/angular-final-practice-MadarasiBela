@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, switchMap } from 'rxjs';
+import { Event } from 'src/app/model/event';
+import { EventService } from 'src/app/service/event.service';
 
 @Component({
   selector: 'app-event-editor',
@@ -7,9 +11,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventEditorComponent implements OnInit {
 
-  constructor() { }
+  event$: Observable<Event> = this.activatedRoute.params.pipe(
+    switchMap( params => this.eventService.get(params['/id'])),
+  );
+
+  constructor(
+    private eventService: EventService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+  )
+    {  };
 
   ngOnInit(): void {
-  }
+  };
 
+  onUpdate(event: Event ): void {
+    this.eventService.update(event).subscribe(
+      () => {
+        return this.router.navigate(['/event']);
+      },
+    );
+   }
+
+onInit() {
+  throw new Error('Function not implemented.');
+};
 }
